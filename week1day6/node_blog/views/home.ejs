@@ -1,0 +1,97 @@
+app.get('/post/:id', (req, res) => {
+  // find the post in the `posts` array
+  const post = posts.filter((post) => {
+    return post.id == req.params.id
+  })[0]
+
+  // render the `post.ejs` template with the post content
+  res.render('post', {
+    author: post.author,
+    title: post.title,
+    body: post.body
+  })
+})
+
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>Node.js Blog</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+    <style>
+        body {
+            padding-top: 20px;
+            padding-bottom: 20px;
+        }
+
+        .jumbotron {
+          margin-top: 10px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <%- include('partials/navbar') %>
+        <div class="jumbotron">
+            <h1>All about Node</h1>
+            <p class="lead">Check out our articles below!</p>
+        </div>
+    <div class="list-group">
+  <!-- loop over blog posts and render them -->
+        <% posts.forEach((post) => { %>
+        <a href="/post/<%= post.id %>" class="list-group-item">
+            <h4 class="list-group-item-heading"><%= post.title %></h4>
+            <p class="list-group-item-text"><%= post.author %></p>
+        </a>
+    <% }) %>
+</div>
+
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="list-group">
+                  <!-- loop over blog posts and render them -->
+                  LIST_OF_POSTS
+                </div>
+            </div>
+        </div>
+        <%- include('partials/footer') %>
+    </div>
+</body>
+
+</html>
+
+and for the post page in views/post.ejs:
+
+<!-- views/post.ejs -->
+
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>POST_TITLE | Node.js Blog</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+    <style>
+        body {
+            padding-top: 20px;
+            padding-bottom: 20px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <%- include('partials/navbar') %>
+        <div>
+            <h2>POST_TITLE</h2>
+            <p>by <a href="#">POST_AUTHOR</a></p>
+
+            <p>POST_CONTENT</p>
+            <hr>
+        </div>
+        <%- include('partials/footer') %>
+    </div>
+</body>
+
+</html>
